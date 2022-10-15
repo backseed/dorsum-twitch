@@ -1,0 +1,10 @@
+name: dorsum-twitch
+version: 0.1.0
+license: MIT
+dependencies:
+  redis:
+    github: stefanwille/crystal-redis
+development_dependencies:
+  webmock:
+    github: manastech/webmock.cr
+    branch: master
