@@ -52,6 +52,11 @@ module Dorsum
             Log.setup(:debug)
           end
 
+          parser.on("--version", "Print the version.") do
+            puts Dorsum::Twitch::VERSION
+            exit
+          end
+
           parser.on("-h", "--help", "Show this help") do
             context.run = false
             puts parser
