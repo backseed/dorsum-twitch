@@ -8,11 +8,13 @@ module Dorsum
       getter context : Context
       # Manages the persistent configuration of the service on disk.
       getter config : Config
+      # Connection to the Redis server.
+      getter redis : Redis::PooledClient
 
       def initialize
-        @redis = Redis::PooledClient.new
         @context = Context.new
         @config = Config.load
+        @redis = Redis::PooledClient.new
       end
 
       def run(argv)
@@ -39,7 +41,7 @@ module Dorsum
       end
 
       private def run
-        Dorsum::Twitch::Chat::Session.new(config, context).run
+        Dorsum::Twitch::Chat::Session.new(config, context, redis).run
       end
 
       private def print_errors
