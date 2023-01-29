@@ -15,7 +15,7 @@ module Dorsum
 
         def record(message : Message)
           result = @redis.set(
-            "arrived:#{message.user_id}", message.tmi_sent_ts,
+            "arrived:#{message.channel}:#{message.user_id}", message.tmi_sent_ts,
             nx: true, px: ARRIVE_INTERVAL
           )
           return unless result == "OK"
