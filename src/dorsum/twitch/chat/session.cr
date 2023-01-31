@@ -74,6 +74,8 @@ module Dorsum
           when "ROOMSTATE"
           when "USERSTATE"
           when "USERNOTICE"
+            message.write_to_log
+            @roll_call.record(message)
           else
             Log.info { "Not implemented: #{message.command}" }
           end

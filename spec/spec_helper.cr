@@ -14,6 +14,14 @@ def build_dorsum_config
   config
 end
 
+def build_dorsum_context
+  Dorsum::Context.new
+end
+
+def build_dorsum_redis
+  Redis::PooledClient.new(database: 4)
+end
+
 def mock_dorsum_twitch_api_authentication_success
   WebMock.stub(:post, %r{\Ahttps://id.twitch.tv/oauth2/token}).to_return(
     status: 200,
