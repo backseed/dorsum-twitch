@@ -89,7 +89,8 @@ module Dorsum
 
         def send_capabilites
           Log.info { "Registering capabilites with the server…" }
-          client.puts("CAP REQ :twitch.tv/membership")
+          # We don't care about JOIN and PART messages.
+          # client.puts("CAP REQ :twitch.tv/membership")
           client.puts("CAP REQ :twitch.tv/tags")
           client.puts("CAP REQ :twitch.tv/commands")
         end
