@@ -42,6 +42,10 @@ module Dorsum
 
       private def run
         Dorsum::Twitch::Chat::Session.new(config, context, redis).run
+      rescue e : IO::TimeoutError | Dorsum::TimeoutError
+        Log.warn { e.message }
+      rescue e : Dorsum::ReconnectError
+        Log.warn { "Reconnecting…" }
       end
 
       private def print_errors

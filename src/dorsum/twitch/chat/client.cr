@@ -14,7 +14,13 @@ module Dorsum
           tcp_socket = TCPSocket.new(HOST, PORT)
           tcp_socket.read_timeout = 15
           tcp_socket.write_timeout = 5
+
+          # Configure pretty agressive keepalive settings so detect dead connections.
           tcp_socket.keepalive = true
+          tcp_socket.tcp_keepalive_idle = 20
+          tcp_socket.tcp_keepalive_interval = 1
+          tcp_socket.tcp_keepalive_count = 3
+
           Log.info { "Connecting to #{HOST}…" }
           @socket = OpenSSL::SSL::Socket::Client.new(tcp_socket)
           # Prevent other code from using the socket before it established completely by interacting with it.

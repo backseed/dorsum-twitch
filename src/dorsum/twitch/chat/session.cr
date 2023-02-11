@@ -15,6 +15,7 @@ module Dorsum
           @client = Dorsum::Twitch::Chat::Client.new
           @api = Dorsum::Twitch::Api::Client.new(@config)
           @roll_call = RollCall.new(@redis)
+          @authenticated = false
         end
 
         def run
