@@ -71,7 +71,7 @@ module Dorsum
             @roll_call.record(message)
           when "RECONNECT"
             Log.warn { "Server asked us to reconnect" }
-            return
+            exit -1
           when "ROOMSTATE"
           when "USERSTATE"
           when "USERNOTICE"
