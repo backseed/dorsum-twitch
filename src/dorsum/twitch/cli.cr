@@ -30,6 +30,8 @@ module Dorsum
         case context.command
         when "config"
           config.save
+        when "clear"
+          Dorsum::Twitch::Chat::RollCall.new(@redis).clear(context)
         else
           run_forever
         end

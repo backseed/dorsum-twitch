@@ -23,6 +23,12 @@ module Dorsum
           @redis.command(["XADD", message.channel, "*", "arrival", to_json(message)])
         end
 
+        def clear(context : Context)
+          @redis.keys("arrived:#{context.channel}:*").each do |key|
+            @redis.del(key)
+          end
+        end
+
         private def to_json(message : Message)
           {
             "display-name" => message.display_name,

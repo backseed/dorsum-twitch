@@ -9,6 +9,10 @@ module Dorsum
           parser.separator ""
           parser.separator "Commands:"
 
+          parser.on("clear", "Clear arrivals for a channel.") do
+            context.command = "clear"
+          end
+
           parser.on("config", "Update configuration and write it to disk.") do
             context.command = "config"
 
