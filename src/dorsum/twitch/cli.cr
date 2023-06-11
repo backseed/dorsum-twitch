@@ -8,12 +8,15 @@ module Dorsum
       getter context : Context
       # Manages the persistent configuration of the service on disk.
       getter config : Config
+      # Configures and holds the connection to the chat server.
+      getter connection : Chat::TcpConnection
       # Connection to the Redis server.
       getter redis : Redis::PooledClient
 
       def initialize
         @context = Context.new
         @config = Config.load
+        @connection = Chat::TcpConnection.new
         @redis = Redis::PooledClient.new
       end
 
@@ -43,8 +46,8 @@ module Dorsum
       end
 
       private def run
-        Dorsum::Twitch::Chat::Session.new(config, context, redis).run
-      rescue e : IO::TimeoutError | Dorsum::TimeoutError
+        Dorsum::Twitch::Chat::Session.new(config, context, connection, redis).run
+      rescue e : IO::TimeoutError
         Log.warn { e.message }
       rescue e : Dorsum::ReconnectError
         Log.warn { "Reconnecting…" }

@@ -1,7 +1,9 @@
 require "spec"
+require "log/spec"
 require "webmock"
 
 require "../src/dorsum"
+require "./support/*"
 
 Spec.before_each do
   WebMock.reset
@@ -11,11 +13,19 @@ def build_dorsum_config
   config = Dorsum::Config.new
   config.client_id = "2NPWzpWBESxop8gW"
   config.client_secret = "2emyJyFj33S9Pf8Z"
+  config.username = "happy-user"
+  config.password = "secret"
   config
 end
 
 def build_dorsum_context
-  Dorsum::Context.new
+  context = Dorsum::Context.new
+  context.channel = "happy-channel"
+  context
+end
+
+def build_connection
+  Support::MockConnection.new
 end
 
 def build_dorsum_redis

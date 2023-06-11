@@ -6,7 +6,7 @@ require "./connection"
 module Dorsum
   module Twitch
     module Chat
-      class Client < Dorsum::Twitch::Chat::Connection
+      class TcpConnection < Dorsum::Twitch::Chat::Connection
         HOST = "irc.chat.twitch.tv"
         PORT = 6697_u16
 
@@ -15,7 +15,7 @@ module Dorsum
           tcp_socket.read_timeout = 15
           tcp_socket.write_timeout = 5
 
-          # Configure pretty agressive keepalive settings so detect dead connections.
+          # Configure pretty agressive keepalive settings to detect dead connections.
           tcp_socket.keepalive = true
           tcp_socket.tcp_keepalive_idle = 20
           tcp_socket.tcp_keepalive_interval = 1
@@ -28,12 +28,7 @@ module Dorsum
           self
         end
 
-        def socket
-          raise "Client is not connected, please call #connect." if @socket.nil?
-          @socket.as(OpenSSL::SSL::Socket::Client)
-        end
-
-        def gets
+        def gets : String | Nil
           line = socket.gets
           Log.debug { "< #{line}" } if line
           line
@@ -50,6 +45,11 @@ module Dorsum
         def close
           socket.close
           @socket = nil
+        end
+
+        private def socket
+          raise "Client is not connected, please call #connect." if @socket.nil?
+          @socket.as(OpenSSL::SSL::Socket::Client)
         end
       end
     end
