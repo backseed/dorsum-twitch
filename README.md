@@ -13,7 +13,7 @@ Dorsum can automatically reply to certain messages or events in chat.
     reply: "@{{display-name}}: join here: https://discord.gg/xxxxx"
     cooldown: 5m
   - command: title
-	 reply: "@{{display-name}}: {{channel.title}} ({{channel.game_name}})"
+    reply: "@{{display-name}}: {{channel.title}} ({{channel.game_name}})"
   - command: socials
     allow: [mod,subscriber]
     reply: "@{{display-name}}: https://twitter.com/tom"
