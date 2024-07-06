@@ -12,8 +12,8 @@ module Dorsum
 
         def connect
           tcp_socket = TCPSocket.new(HOST, PORT)
-          tcp_socket.read_timeout = 15
-          tcp_socket.write_timeout = 5
+          tcp_socket.read_timeout = Time::Span.new(seconds: 15)
+          tcp_socket.write_timeout = Time::Span.new(seconds: 15)
 
           # Configure pretty agressive keepalive settings to detect dead connections.
           tcp_socket.keepalive = true
