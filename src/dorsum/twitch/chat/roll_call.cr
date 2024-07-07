@@ -27,6 +27,10 @@ module Dorsum
           @redis.keys("arrived:#{context.channel}:*").each do |key|
             @redis.del(key)
           end
+          @redis.integer_command([
+            "XTRIM", "#{context.channel}",
+            "MAXLEN", "0",
+          ])
         end
 
         private def to_json(message : Message)
